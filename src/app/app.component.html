@@ -1,8 +1,8 @@
 <div>
-    Versión actual {{ currentVersion }}
+  <button (click)="checkUpdate()">Check for update</button>
 </div>
 @if (showUpdateButton) {
-    <div>
-        <button (click)="update()">Actualizar</button>
-    </div>
+<div>
+  <button (click)="update()">Actualizar</button>
+</div>
 }

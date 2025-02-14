@@ -1,36 +1,30 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import * as versionData from '../../public/assets/config.json';
+import { Component, inject } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  httpClient!: HttpClient;
-
+export class AppComponent {
   showUpdateButton = false;
-  currentVersion!: string;
+
+  swUpdate!: SwUpdate;
+  updateSubscription!: Subscription;
 
   constructor() {
-    this.httpClient = inject(HttpClient);
-  }
-
-  ngOnInit(): void {
-    this.currentVersion = versionData.version;
-
-    const headers = new HttpHeaders().set('Cache-Control', 'no-cache').set('Pragma', 'no-cache');
-
-    this.httpClient.get<{ version: string }>('./assets/config.json', { headers })
-      .subscribe(config => {
-        console.log(config);
-
-        this.showUpdateButton =config.version !== this.currentVersion;
-      });
+    this.swUpdate = inject(SwUpdate);
   }
 
   update(): void {
     location.reload();
+  }
+
+  checkUpdate(): void {
+    this.swUpdate
+      .checkForUpdate()
+      .then((value) => (this.showUpdateButton = value));
   }
 }
