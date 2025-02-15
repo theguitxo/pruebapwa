@@ -27,4 +27,8 @@ export class AppComponent {
       .checkForUpdate()
       .then((value) => (this.showUpdateButton = value));
   }
+
+  hola(): void {
+    console.log('hola');
+  }
 }
