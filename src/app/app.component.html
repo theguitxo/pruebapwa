@@ -1,8 +1,13 @@
-<div>
-  <button (click)="checkUpdate()">Check for update</button>
+<div class="p-1">
+  <div class="p-05">
+    <button (click)="checkUpdate()">Check for update</button>
+  </div>
+  @if (showUpdateButton) {
+  <div class="p-05">
+    <button (click)="update()">Actualizar</button>
+  </div>
+  }
+  <div class="p-05">
+    <img src="../assets/tierra.jpg" width="100" height="auto" />
+  </div>
 </div>
-@if (showUpdateButton) {
-<div>
-  <button (click)="update()">Actualizar</button>
-</div>
-}
